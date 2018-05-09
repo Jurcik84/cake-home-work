@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLabel, Col, Button , PageHeader} from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLabel, Col, Button, PageHeader } from 'react-bootstrap';
 
 // http services
 import http from './../services/http-service';
 
-const cakeRateConfig = [1, 2, 3, 4, 5];
+const cakeRateConfig = ['', 1, 2, 3, 4, 5];
 
 export default class AddCakeComponent extends Component {
 
@@ -14,13 +14,20 @@ export default class AddCakeComponent extends Component {
 
         // Avoiding the use of Nested Objec.assign() of state
         this.state = {
-            name: '',
-            comment: '',
-            yumFactor: null,
-            imageUrl: '',
+            name: "",
+            comment:  "",
+            yumFactor:  "",
+            imageUrl:  "",
             ratingOptions: cakeRateConfig,
-            isFormSend: false
+            isFormSend: false,
 
+
+            nameError: false,
+            commentEror: false,
+            yumFactorError: false,
+            imageUrlError: false,
+
+            isAllFormEmpty: true
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,8 +35,8 @@ export default class AddCakeComponent extends Component {
 
     handleChange(event) {
 
-        const {name, value} = event.target;
-    
+        const { name, value } = event.target;
+
         if (name.constructor === String && value.constructor === String) {
 
             this.setState({
@@ -60,7 +67,7 @@ export default class AddCakeComponent extends Component {
         };
 
         // Validation of entered values in form
-        if (name.length > 0 && comment.length > 0 && yumFactor !== null && imageUrl.length > 0) {
+        if (name !== "" && comment !== "" && imageUrl !== "" && yumFactor !== "") {
 
             http.createCake(cake_config_ob, serverResponse => {
 
@@ -71,12 +78,11 @@ export default class AddCakeComponent extends Component {
                     comment: '',
                     yumFactor: '',
                     imageUrl: '',
-                }, ()=>{
+                }, () => {
 
-
-                   setTimeout(()=>  this.setState({
-                    isFormSend: true 
-                }), 2000)
+                    setTimeout(() => this.setState({
+                        isFormSend: true
+                    }), 2000)
 
                 });
             });
@@ -84,34 +90,46 @@ export default class AddCakeComponent extends Component {
 
         else {
 
-            alert(JSON.stringify(cake_config_ob, null, 5))
+            alert('Sending empty cake info does not make anybody drool')
         }
     }
 
     render() {
 
-        const { ratingOptions, name, comment, yumFactor, imageUrl } = this.state;
+        console.log('add-cake-view', this.state)
 
-        if(this.state.isFormSend === true){
+        const { ratingOptions,
+            name,
+            comment,
+            yumFactor,
+            imageUrl,
+            isFormSend,
+            nameError,
+            commentEror,
+            yumFactorError,
+            imageUrlError
+        } = this.state;
+
+        if (isFormSend === true) {
 
             return <Redirect to={"/"} />;
         }
         return (
             <Grid>
-                    <PageHeader>
-                    <Button>
-                        <Link to="/">
-                            Return to Home Page
-                        </Link>
-                    </Button>
+                <PageHeader>
 
-                    <h1>Main Page</h1>
+                    <Link to="/">
+                        <Button>
+                            Return to Home Page
+                            </Button>
+                    </Link>
+
                 </PageHeader>
                 <Row>
                     <Col xs={12} md={6}>
-                      
-                        <form onSubmit={this.handleSubmit}>
-                            <p>
+
+                        <form onSubmit={this.handleSubmit} action="">
+                            <div>
                                 <ControlLabel>Name</ControlLabel>
                                 <FormControl
                                     placeholder="Enter Name"
@@ -119,8 +137,11 @@ export default class AddCakeComponent extends Component {
                                     value={name}
                                     name="name"
                                     onChange={this.handleChange} />
-                            </p>
-                            <p>
+                                {
+                                   name.length === 0 ? <p>Name is not defined</p> : null
+                                }
+                            </div>
+                            <div>
                                 <ControlLabel>Comment</ControlLabel>
                                 <FormControl
                                     componentClass="textarea"
@@ -128,9 +149,12 @@ export default class AddCakeComponent extends Component {
                                     name="comment"
                                     value={comment}
                                     onChange={this.handleChange} />
-                            </p>
-                            <p>
-                                <ControlLabel>Rate</ControlLabel>
+                                {
+                                    comment.length === 0 ? <p>Comment is not defined</p> : null
+                                }
+                            </div>
+                            <div>
+                                <ControlLabel>yumFactor</ControlLabel>
                                 <FormControl componentClass="select" placeholder="select"
                                     name="yumFactor"
                                     value={yumFactor}
@@ -145,8 +169,11 @@ export default class AddCakeComponent extends Component {
                                                 </option>)
                                     }
                                 </FormControl>
-                            </p>
-                            <p>
+                                {
+                                    yumFactor === "" ? <p>yumFactor is not defined</p> : null
+                                }
+                            </div>
+                            <div>
                                 <ControlLabel>Image url</ControlLabel>
                                 <FormControl
                                     placeholder="Enter Name"
@@ -154,10 +181,14 @@ export default class AddCakeComponent extends Component {
                                     type="text"
                                     value={imageUrl}
                                     onChange={this.handleChange} />
-                            </p>
-                            <p>
-                                <FormControl type="submit" value="Submit" />
-                            </p>
+                                {
+                                    imageUrl.length === 0 ? <p>imageUrl is not defined</p> : null
+                                }
+                            </div>
+                            <hr />
+                            <div>
+                                <Button type="submit">Send Your cake to make them drool</Button>
+                            </div>
                         </form>
                     </Col>
                     <Col xs={12} md={6}></Col>

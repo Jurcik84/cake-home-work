@@ -34,12 +34,11 @@ export default class DetailView extends Component {
         return (
             <Grid>
                 <PageHeader>
-                    <Button>
-                        <Link to="/">
+                    <Link to="/">
+                        <Button>
                             Return to Home Page
-                        </Link>
-                    </Button>
-                    <h1>Main Page</h1>
+                            </Button>
+                    </Link>
                 </PageHeader>
                 <h1>{cake.name}</h1>
                 <p>{cake.comment}</p>

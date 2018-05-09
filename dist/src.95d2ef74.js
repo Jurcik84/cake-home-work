@@ -44108,11 +44108,6 @@ var MainView = function (_Component) {
                             { to: '/addcake' },
                             'Add Cake'
                         )
-                    ),
-                    _react2.default.createElement(
-                        'h1',
-                        null,
-                        'Main Page'
                     )
                 ),
                 _react2.default.createElement(
@@ -44215,18 +44210,13 @@ var DetailView = function (_Component) {
                     _reactBootstrap.PageHeader,
                     null,
                     _react2.default.createElement(
-                        _reactBootstrap.Button,
-                        null,
+                        _reactRouterDom.Link,
+                        { to: '/' },
                         _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/' },
+                            _reactBootstrap.Button,
+                            null,
                             'Return to Home Page'
                         )
-                    ),
-                    _react2.default.createElement(
-                        'h1',
-                        null,
-                        'Main Page'
                     )
                 ),
                 _react2.default.createElement(
@@ -44286,7 +44276,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // http services
 
 
-var cakeRateConfig = [1, 2, 3, 4, 5];
+var cakeRateConfig = ['', 1, 2, 3, 4, 5];
 
 var AddCakeComponent = function (_Component) {
     _inherits(AddCakeComponent, _Component);
@@ -44298,13 +44288,19 @@ var AddCakeComponent = function (_Component) {
         var _this = _possibleConstructorReturn(this, (AddCakeComponent.__proto__ || Object.getPrototypeOf(AddCakeComponent)).call(this, props));
 
         _this.state = {
-            name: '',
-            comment: '',
-            yumFactor: null,
-            imageUrl: '',
+            name: "",
+            comment: "",
+            yumFactor: "",
+            imageUrl: "",
             ratingOptions: cakeRateConfig,
-            isFormSend: false
+            isFormSend: false,
 
+            nameError: false,
+            commentEror: false,
+            yumFactorError: false,
+            imageUrlError: false,
+
+            isAllFormEmpty: true
         };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -44352,7 +44348,7 @@ var AddCakeComponent = function (_Component) {
             };
 
             // Validation of entered values in form
-            if (name.length > 0 && comment.length > 0 && yumFactor !== null && imageUrl.length > 0) {
+            if (name !== "" && comment !== "" && imageUrl !== "" && yumFactor !== "") {
 
                 _httpService2.default.createCake(cake_config_ob, function (serverResponse) {
 
@@ -44374,21 +44370,29 @@ var AddCakeComponent = function (_Component) {
                 });
             } else {
 
-                alert(JSON.stringify(cake_config_ob, null, 5));
+                alert('Sending empty cake info does not make anybody drool');
             }
         }
     }, {
         key: 'render',
         value: function render() {
+
+            console.log('add-cake-view', this.state);
+
             var _state2 = this.state,
                 ratingOptions = _state2.ratingOptions,
                 name = _state2.name,
                 comment = _state2.comment,
                 yumFactor = _state2.yumFactor,
-                imageUrl = _state2.imageUrl;
+                imageUrl = _state2.imageUrl,
+                isFormSend = _state2.isFormSend,
+                nameError = _state2.nameError,
+                commentEror = _state2.commentEror,
+                yumFactorError = _state2.yumFactorError,
+                imageUrlError = _state2.imageUrlError;
 
 
-            if (this.state.isFormSend === true) {
+            if (isFormSend === true) {
 
                 return _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" });
             }
@@ -44399,18 +44403,13 @@ var AddCakeComponent = function (_Component) {
                     _reactBootstrap.PageHeader,
                     null,
                     _react2.default.createElement(
-                        _reactBootstrap.Button,
-                        null,
+                        _reactRouterDom.Link,
+                        { to: '/' },
                         _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/' },
+                            _reactBootstrap.Button,
+                            null,
                             'Return to Home Page'
                         )
-                    ),
-                    _react2.default.createElement(
-                        'h1',
-                        null,
-                        'Main Page'
                     )
                 ),
                 _react2.default.createElement(
@@ -44421,9 +44420,9 @@ var AddCakeComponent = function (_Component) {
                         { xs: 12, md: 6 },
                         _react2.default.createElement(
                             'form',
-                            { onSubmit: this.handleSubmit },
+                            { onSubmit: this.handleSubmit, action: '' },
                             _react2.default.createElement(
-                                'p',
+                                'div',
                                 null,
                                 _react2.default.createElement(
                                     _reactBootstrap.ControlLabel,
@@ -44435,10 +44434,15 @@ var AddCakeComponent = function (_Component) {
                                     type: 'text',
                                     value: name,
                                     name: 'name',
-                                    onChange: this.handleChange })
+                                    onChange: this.handleChange }),
+                                name.length === 0 ? _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'Name is not defined'
+                                ) : null
                             ),
                             _react2.default.createElement(
-                                'p',
+                                'div',
                                 null,
                                 _react2.default.createElement(
                                     _reactBootstrap.ControlLabel,
@@ -44450,15 +44454,20 @@ var AddCakeComponent = function (_Component) {
                                     placeholder: 'textarea',
                                     name: 'comment',
                                     value: comment,
-                                    onChange: this.handleChange })
+                                    onChange: this.handleChange }),
+                                comment.length === 0 ? _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'Comment is not defined'
+                                ) : null
                             ),
                             _react2.default.createElement(
-                                'p',
+                                'div',
                                 null,
                                 _react2.default.createElement(
                                     _reactBootstrap.ControlLabel,
                                     null,
-                                    'Rate'
+                                    'yumFactor'
                                 ),
                                 _react2.default.createElement(
                                     _reactBootstrap.FormControl,
@@ -44475,10 +44484,15 @@ var AddCakeComponent = function (_Component) {
                                             option
                                         );
                                     })
-                                )
+                                ),
+                                yumFactor === "" ? _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'yumFactor is not defined'
+                                ) : null
                             ),
                             _react2.default.createElement(
-                                'p',
+                                'div',
                                 null,
                                 _react2.default.createElement(
                                     _reactBootstrap.ControlLabel,
@@ -44490,12 +44504,22 @@ var AddCakeComponent = function (_Component) {
                                     name: 'imageUrl',
                                     type: 'text',
                                     value: imageUrl,
-                                    onChange: this.handleChange })
+                                    onChange: this.handleChange }),
+                                imageUrl.length === 0 ? _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'imageUrl is not defined'
+                                ) : null
                             ),
+                            _react2.default.createElement('hr', null),
                             _react2.default.createElement(
-                                'p',
+                                'div',
                                 null,
-                                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'submit', value: 'Submit' })
+                                _react2.default.createElement(
+                                    _reactBootstrap.Button,
+                                    { type: 'submit' },
+                                    'Send Your cake to make them drool'
+                                )
                             )
                         )
                     ),
@@ -44569,7 +44593,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { component: NoView })
     )
 ), root);
-},{"react":8,"react-dom":7,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./services/http-service":6}],343:[function(require,module,exports) {
+},{"react":8,"react-dom":7,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./services/http-service":6}],353:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -44739,5 +44763,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[343,2], null)
+},{}]},{},[353,2], null)
 //# sourceMappingURL=/src.95d2ef74.map

@@ -46,8 +46,6 @@ export default class MainView extends Component {
                             Add Cake
                         </Link>
                     </Button>
-
-                    <h1>Main Page</h1>
                 </PageHeader>
                 <ListGroup>
                     {
@@ -57,7 +55,6 @@ export default class MainView extends Component {
                                 {cake.name}</Link></ListGroupItem>) : 'Sorry No Cakes'
                     }
                 </ListGroup>
-
             </Grid>
         )
     }
