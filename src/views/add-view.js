@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Image } from 'react-router-dom';
-
-import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLabel, Col, Button } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLabel, Col, Button , PageHeader} from 'react-bootstrap';
 
 // http services
 import http from './../services/http-service';
@@ -19,7 +18,8 @@ export default class AddCakeComponent extends Component {
             comment: '',
             yumFactor: null,
             imageUrl: '',
-            ratingOptions: cakeRateConfig
+            ratingOptions: cakeRateConfig,
+            isFormSend: false
 
         };
         this.handleChange = this.handleChange.bind(this);
@@ -28,9 +28,8 @@ export default class AddCakeComponent extends Component {
 
     handleChange(event) {
 
-        const name = event.target.name;
-        const value = event.target.value;
-
+        const {name, value} = event.target;
+    
         if (name.constructor === String && value.constructor === String) {
 
             this.setState({
@@ -72,7 +71,14 @@ export default class AddCakeComponent extends Component {
                     comment: '',
                     yumFactor: '',
                     imageUrl: '',
-                })
+                }, ()=>{
+
+
+                   setTimeout(()=>  this.setState({
+                    isFormSend: true 
+                }), 2000)
+
+                });
             });
         }
 
@@ -86,17 +92,24 @@ export default class AddCakeComponent extends Component {
 
         const { ratingOptions, name, comment, yumFactor, imageUrl } = this.state;
 
-        console.log(this.state)
+        if(this.state.isFormSend === true){
 
+            return <Redirect to={"/"} />;
+        }
         return (
             <Grid>
+                    <PageHeader>
+                    <Button>
+                        <Link to="/">
+                            Return to Home Page
+                        </Link>
+                    </Button>
+
+                    <h1>Main Page</h1>
+                </PageHeader>
                 <Row>
                     <Col xs={12} md={6}>
-                        <div>
-                            <Button>
-                                <Link to="/" >Back</Link>
-                            </Button>
-                        </div>
+                      
                         <form onSubmit={this.handleSubmit}>
                             <p>
                                 <ControlLabel>Name</ControlLabel>

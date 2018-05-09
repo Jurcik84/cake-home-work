@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Image } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import { ListGroup, ListGroupItem ,Grid, Row} from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Grid, Row, PageHeader, Button } from 'react-bootstrap';
 
 
 import http from './../services/http-service';
@@ -20,12 +20,19 @@ export default class MainView extends Component {
     //     this.fetchAllCakes();
     // }
 
+
+
     componentWillMount() {
-        http.getAllCakes((cakes)=>{
-            this.setState((prevState)=>({
-              cakes
+        http.getAllCakes((cakes) => {
+            this.setState((prevState) => ({
+                cakes
             }))
-          })
+        })
+    }
+
+    componentDidMount() {
+
+       
     }
 
     render() {
@@ -33,12 +40,15 @@ export default class MainView extends Component {
         console.log('mainView', cakes);
         return (
             <Grid>
-               <div>
-               <Link to="/addcake">
-                 Add Cake
-               </Link>   
-               <h1>Main Page</h1>
-               </div>
+                <PageHeader>
+                    <Button>
+                        <Link to="/addcake">
+                            Add Cake
+                        </Link>
+                    </Button>
+
+                    <h1>Main Page</h1>
+                </PageHeader>
                 <ListGroup>
                     {
                         cakes.constructor === Array && cakes.length > 0 ? cakes.map((cake, cakeIndex) => <ListGroupItem key={cake.id}>
@@ -52,3 +62,4 @@ export default class MainView extends Component {
         )
     }
 }
+
