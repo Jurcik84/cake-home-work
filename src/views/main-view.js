@@ -15,14 +15,8 @@ export default class MainView extends Component {
             cakes: []
         };
     }
-    // This is cousing rerendering and delay
-    // componentDidMount(){
-    //     this.fetchAllCakes();
-    // }
 
-
-
-    componentWillMount() {
+    componentDidMount() {
         http.getAllCakes((cakes) => {
             this.setState((prevState) => ({
                 cakes
@@ -30,10 +24,6 @@ export default class MainView extends Component {
         })
     }
 
-    componentDidMount() {
-
-       
-    }
 
     render() {
         const { cakes } = this.state;

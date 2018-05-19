@@ -16,7 +16,7 @@ export default class DetailView extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // console.log('props', this.props.match.params.id)
 
         // destructing props object and getting id of cake

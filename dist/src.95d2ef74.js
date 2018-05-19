@@ -44064,15 +44064,10 @@ var MainView = function (_Component) {
         };
         return _this;
     }
-    // This is cousing rerendering and delay
-    // componentDidMount(){
-    //     this.fetchAllCakes();
-    // }
-
 
     _createClass(MainView, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
             var _this2 = this;
 
             _httpService2.default.getAllCakes(function (cakes) {
@@ -44083,9 +44078,6 @@ var MainView = function (_Component) {
                 });
             });
         }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {}
     }, {
         key: 'render',
         value: function render() {
@@ -44214,8 +44206,8 @@ var DetailView = function (_Component) {
     }
 
     _createClass(DetailView, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
             var _this2 = this;
 
             // console.log('props', this.props.match.params.id)
@@ -44608,16 +44600,7 @@ var _addView = require('./views/add-view');
 
 var _addView2 = _interopRequireDefault(_addView);
 
-var _httpService = require('./services/http-service');
-
-var _httpService2 = _interopRequireDefault(_httpService);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import App from './App';
-
-// import ListComponent from './components/list';
-
 
 var NoView = function NoView(_ref) {
     var location = _ref.location;
@@ -44643,7 +44626,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { component: NoView })
     )
 ), root);
-},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./services/http-service":6}],349:[function(require,module,exports) {
+},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5}],351:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -44813,5 +44796,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[349,2], null)
+},{}]},{},[351,2], null)
 //# sourceMappingURL=/src.95d2ef74.map
