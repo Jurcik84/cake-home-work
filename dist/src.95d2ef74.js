@@ -44091,12 +44091,12 @@ var MainView = function (_Component) {
                     _reactBootstrap.PageHeader,
                     null,
                     _react2.default.createElement(
-                        _reactBootstrap.Button,
-                        null,
+                        _reactRouterDom.Link,
+                        { to: '/addcake' },
                         _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/addcake' },
-                            'Add Cake'
+                            _reactBootstrap.Button,
+                            null,
+                            'Add New Cake'
                         )
                     )
                 ),
@@ -44626,7 +44626,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { component: NoView })
     )
 ), root);
-},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5}],351:[function(require,module,exports) {
+},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5}],352:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -44796,5 +44796,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[351,2], null)
+},{}]},{},[352,2], null)
 //# sourceMappingURL=/src.95d2ef74.map

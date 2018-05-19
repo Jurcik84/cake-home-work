@@ -31,11 +31,13 @@ export default class MainView extends Component {
         return (
             <Grid>
                 <PageHeader>
-                    <Button>
+                 
                         <Link to="/addcake">
-                            Add Cake
+                          <Button>
+                              Add New Cake
+                          </Button>
                         </Link>
-                    </Button>
+                    
                 </PageHeader>
                 <ListGroup>
                     {
