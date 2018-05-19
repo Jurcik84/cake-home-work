@@ -43,8 +43,6 @@ export default new class HttpService {
 
     createCake(cake, callback){
 
-        alert()
-
         const cake_config_ob = JSON.stringify(cake);
         const http_method_post = 'POST';
 

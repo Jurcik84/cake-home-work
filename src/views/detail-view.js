@@ -4,6 +4,9 @@ import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLab
 
 import http from './../services/http-service';
 
+
+import DetailViewHeader from './../components/detail-view-header'
+
 export default class DetailView extends Component {
 
     constructor(props) {
@@ -33,13 +36,7 @@ export default class DetailView extends Component {
 
         return (
             <Grid>
-                <PageHeader>
-                    <Link to="/">
-                        <Button>
-                            Return to Home Page
-                            </Button>
-                    </Link>
-                </PageHeader>
+               <DetailViewHeader />
                 <h1>{cake.name}</h1>
                 <p>{cake.comment}</p>
                 <div>

@@ -5,6 +5,9 @@ import { ListGroup, ListGroupItem, Grid, Row, FormGroup, FormControl, ControlLab
 // http services
 import http from './../services/http-service';
 
+
+import AddViewHeader from './../components/add-view-header';
+
 const cakeRateConfig = ['', 1, 2, 3, 4, 5];
 
 export default class AddCakeComponent extends Component {
@@ -116,15 +119,7 @@ export default class AddCakeComponent extends Component {
         }
         return (
             <Grid>
-                <PageHeader>
-
-                    <Link to="/">
-                        <Button>
-                            Return to Home Page
-                            </Button>
-                    </Link>
-
-                </PageHeader>
+               <AddViewHeader />
                 <Row>
                     <Col xs={12} md={6}>
 
