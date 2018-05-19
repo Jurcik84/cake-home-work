@@ -44575,7 +44575,31 @@ var AddCakeComponent = function (_Component) {
 }(_react.Component);
 
 exports.default = AddCakeComponent;
-},{"react":7,"react-router-dom":9,"react-bootstrap":25,"./../services/http-service":6,"./../components/add-view-header":347}],2:[function(require,module,exports) {
+},{"react":7,"react-router-dom":9,"react-bootstrap":25,"./../services/http-service":6,"./../components/add-view-header":347}],353:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NoView = function NoView(_ref) {
+  var location = _ref.location;
+  return _react2.default.createElement(
+    'div',
+    null,
+    location.pathname,
+    ' : Not found'
+  );
+};
+
+exports.default = NoView;
+},{"react":7}],2:[function(require,module,exports) {
 'use strict';
 
 var _react = require('react');
@@ -44600,17 +44624,11 @@ var _addView = require('./views/add-view');
 
 var _addView2 = _interopRequireDefault(_addView);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _noView = require('./views/no-view');
 
-var NoView = function NoView(_ref) {
-    var location = _ref.location;
-    return _react2.default.createElement(
-        'div',
-        null,
-        location.pathname,
-        ' : Not found'
-    );
-};
+var _noView2 = _interopRequireDefault(_noView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var root = document.getElementById('root');
 
@@ -44623,10 +44641,10 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _mainView2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/detail/:id', component: _detailView2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/addcake', component: _addView2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { component: NoView })
+        _react2.default.createElement(_reactRouterDom.Route, { component: _noView2.default })
     )
 ), root);
-},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5}],352:[function(require,module,exports) {
+},{"react":7,"react-dom":8,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./views/no-view":353}],352:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 

@@ -8,7 +8,9 @@ import MainView from './views/main-view';
 import DetailView from './views/detail-view';
 import AddCakeComponent from './views/add-view';
 
-const NoView = ({ location }) => <div>{location.pathname} : Not found</div>
+import NoView from './views/no-view';
+
+
 
 
 const root = document.getElementById('root')
