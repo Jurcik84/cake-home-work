@@ -15,33 +15,34 @@ export default new class HttpService {
     getAllCakes(callback) {
         return fetch(CAKES_END_POINT)
             .then(httpResponseCakes => {
-                if (httpResponseCakes.ok === true && httpResponseCakes.status === 200) {
+                if (httpResponseCakes.ok === true && httpResponseCakes.status < 300) {
                     return httpResponseCakes;
                 }
                 else {
-                    return 'error:getall';
+                    return 'all:error';
                 }
             }).then(data => (data.json())
             ).then(cakes => callback(cakes))
             .catch(error => callback('error:getall'))
     }
 
-// get one cake from server by cake ID
+    // get one cake from server by cake ID
     getOneCakeById(cakeId, callback) {
         return fetch(CAKES_END_POINT + `${cakeId}`)
             .then(response => {
-                if (response.ok === true && response.status === 200) {
-                    return response;
+                if (response.ok === true && response.status < 300) {
+                    return response.json();
                 }
                 else {
-                    return 'error:getone';
+                    return new Error('expected 201 created ! something else has been re')
                 }
-            }).then(data => (data.json())
-            ).then(cakes => callback(cakes))
+
+            })
+            .then(cakes => callback(cakes))
             .catch(error => callback('error:getone'))
     }
 
-    createCake(cake, callback){
+    createCake(cake, callback) {
 
         const cake_config_ob = JSON.stringify(cake);
         const http_method_post = 'POST';
@@ -51,9 +52,18 @@ export default new class HttpService {
             body: cake_config_ob,
             headers: new Headers({
                 'Content-Type': 'application/json'
-              }),
-          }).then((response)=> esponse.json())
-          .then((data)=> callback(data))
-          .catch(error=> callback('error:add'))
+            }),
+        })
+            .then((response) => {
+                if (response.ok === true && response.status === 201) {
+                    return response.json();
+                }
+                else {
+                    return new Error('expected 201 created ! something else has been re')
+                }
+            })
+          
+            .then((data) => callback(data))
+            .catch(error => callback('error:create'))
     }
 }
