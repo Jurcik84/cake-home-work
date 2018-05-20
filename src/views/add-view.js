@@ -74,6 +74,8 @@ export default class AddCakeComponent extends Component {
 
             http.createCake(cake_config_ob, serverResponse => {
 
+              if(serverResponse.serverMessage === undefined){
+
                 console.log('serverResponse', serverResponse);
 
                 this.setState({
@@ -88,6 +90,12 @@ export default class AddCakeComponent extends Component {
                     }), 2000)
 
                 });
+              }
+
+              else {
+
+                alert('Problem with creating new cake')
+              }
             });
         }
 

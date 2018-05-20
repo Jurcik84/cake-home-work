@@ -44091,6 +44091,8 @@ var MainView = function (_Component) {
                             cakes: cakes
                         };
                     });
+                } else {
+                    alert('get problem when loading all cakes');
                 }
             });
         }
@@ -44130,7 +44132,7 @@ var MainView = function (_Component) {
                                 cake.name
                             )
                         );
-                    }) : 'Sorry No Cakes'
+                    }) : null
                 )
             );
         }
@@ -44233,11 +44235,15 @@ var DetailView = function (_Component) {
 
             _httpService2.default.getOneCakeById(id, function (singleCake) {
 
-                _this2.setState(function (prevState) {
-                    return {
-                        cake: singleCake
-                    };
-                });
+                if (singleCake.serverMessage === undefined) {
+                    _this2.setState(function (prevState) {
+                        return {
+                            cake: singleCake
+                        };
+                    });
+                } else {
+                    alert('Problem to get detail info about cake');
+                }
             });
         }
     }, {
@@ -44245,7 +44251,6 @@ var DetailView = function (_Component) {
         value: function render() {
             var cake = this.state.cake;
 
-            console.log('cake', cake);
 
             return _react2.default.createElement(
                 _reactBootstrap.Grid,
@@ -44422,21 +44427,27 @@ var AddCakeComponent = function (_Component) {
 
                 _httpService2.default.createCake(cake_config_ob, function (serverResponse) {
 
-                    console.log('serverResponse', serverResponse);
+                    if (serverResponse.serverMessage === undefined) {
 
-                    _this2.setState({
-                        name: '',
-                        comment: '',
-                        yumFactor: '',
-                        imageUrl: ''
-                    }, function () {
+                        console.log('serverResponse', serverResponse);
 
-                        setTimeout(function () {
-                            return _this2.setState({
-                                isFormSend: true
-                            });
-                        }, 2000);
-                    });
+                        _this2.setState({
+                            name: '',
+                            comment: '',
+                            yumFactor: '',
+                            imageUrl: ''
+                        }, function () {
+
+                            setTimeout(function () {
+                                return _this2.setState({
+                                    isFormSend: true
+                                });
+                            }, 2000);
+                        });
+                    } else {
+
+                        alert('Problem with creating new cake');
+                    }
                 });
             } else {
 
@@ -44660,7 +44671,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { component: _noView2.default })
     )
 ), root);
-},{"react":8,"react-dom":7,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./views/no-view":6}],346:[function(require,module,exports) {
+},{"react":8,"react-dom":7,"react-router-dom":9,"./views/main-view":3,"./views/detail-view":4,"./views/add-view":5,"./views/no-view":6}],352:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -44830,5 +44841,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[346,2], null)
+},{}]},{},[352,2], null)
 //# sourceMappingURL=/src.95d2ef74.map

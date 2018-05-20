@@ -18,12 +18,16 @@ export default class MainView extends Component {
 
     componentDidMount() {
         http.getAllCakes((cakes) => {
-          if(cakes.serverMessage === undefined){
+            if (cakes.serverMessage === undefined) {
 
-            this.setState((prevState) => ({
-                cakes
-            }))
-          }
+                this.setState((prevState) => ({
+                    cakes
+                }))
+            }
+
+            else {
+                alert('get problem when loading all cakes')
+            }
         })
     }
 
@@ -45,7 +49,7 @@ export default class MainView extends Component {
                         cakes.constructor === Array && cakes.length > 0 ? cakes.map((cake, cakeIndex) => <ListGroupItem key={cake.id}>
                             <Link to={`/detail/${cake.id}`}>
                                 <img width="100" src={cake.imageUrl} alt="" />
-                                {cake.name}</Link></ListGroupItem>) : 'Sorry No Cakes'
+                                {cake.name}</Link></ListGroupItem>) : null
                     }
                 </ListGroup>
             </Grid>

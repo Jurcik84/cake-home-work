@@ -23,20 +23,24 @@ export default class DetailView extends Component {
         const { match: { params: { id } } } = this.props;
         http.getOneCakeById(id, (singleCake) => {
 
-            this.setState(prevState => ({
-                cake: singleCake
-            }))
+            if (singleCake.serverMessage === undefined) {
+                this.setState(prevState => ({
+                    cake: singleCake
+                }))
+            }
+            else {
+                alert('Problem to get detail info about cake')
+            }
         });
     }
 
     render() {
 
         const { cake } = this.state;
-        console.log('cake', cake)
 
         return (
             <Grid>
-               <DetailViewHeader />
+                <DetailViewHeader />
                 <h1>{cake.name}</h1>
                 <p>{cake.comment}</p>
                 <div>
