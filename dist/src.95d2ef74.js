@@ -43934,7 +43934,16 @@ exports.ToggleButtonGroup = _ToggleButtonGroup3.default;
 exports.Tooltip = _Tooltip3.default;
 exports.Well = _Well3.default;
 exports.utils = _utils;
-},{"./Accordion":29,"./Alert":30,"./Badge":31,"./Breadcrumb":32,"./BreadcrumbItem":33,"./Button":34,"./ButtonGroup":35,"./ButtonToolbar":36,"./Carousel":37,"./CarouselItem":38,"./Checkbox":39,"./Clearfix":40,"./CloseButton":41,"./ControlLabel":42,"./Col":43,"./Collapse":44,"./Dropdown":45,"./DropdownButton":46,"./Fade":47,"./Form":48,"./FormControl":49,"./FormGroup":50,"./Glyphicon":51,"./Grid":52,"./HelpBlock":53,"./Image":54,"./InputGroup":55,"./Jumbotron":56,"./Label":57,"./ListGroup":58,"./ListGroupItem":59,"./Media":60,"./MenuItem":61,"./Modal":62,"./ModalBody":63,"./ModalFooter":64,"./ModalHeader":65,"./ModalTitle":66,"./Nav":67,"./Navbar":68,"./NavbarBrand":69,"./NavDropdown":70,"./NavItem":71,"./Overlay":72,"./OverlayTrigger":73,"./PageHeader":74,"./PageItem":75,"./Pager":76,"./Pagination":77,"./Panel":78,"./PanelGroup":79,"./Popover":80,"./ProgressBar":81,"./Radio":82,"./ResponsiveEmbed":83,"./Row":84,"./SafeAnchor":85,"./SplitButton":86,"./Tab":87,"./TabContainer":88,"./TabContent":89,"./Table":90,"./TabPane":91,"./Tabs":92,"./Thumbnail":93,"./ToggleButton":94,"./ToggleButtonGroup":95,"./Tooltip":96,"./Well":97,"./utils":222}],10:[function(require,module,exports) {
+},{"./Accordion":29,"./Alert":30,"./Badge":31,"./Breadcrumb":32,"./BreadcrumbItem":33,"./Button":34,"./ButtonGroup":35,"./ButtonToolbar":36,"./Carousel":37,"./CarouselItem":38,"./Checkbox":39,"./Clearfix":40,"./CloseButton":41,"./ControlLabel":42,"./Col":43,"./Collapse":44,"./Dropdown":45,"./DropdownButton":46,"./Fade":47,"./Form":48,"./FormControl":49,"./FormGroup":50,"./Glyphicon":51,"./Grid":52,"./HelpBlock":53,"./Image":54,"./InputGroup":55,"./Jumbotron":56,"./Label":57,"./ListGroup":58,"./ListGroupItem":59,"./Media":60,"./MenuItem":61,"./Modal":62,"./ModalBody":63,"./ModalFooter":64,"./ModalHeader":65,"./ModalTitle":66,"./Nav":67,"./Navbar":68,"./NavbarBrand":69,"./NavDropdown":70,"./NavItem":71,"./Overlay":72,"./OverlayTrigger":73,"./PageHeader":74,"./PageItem":75,"./Pager":76,"./Pagination":77,"./Panel":78,"./PanelGroup":79,"./Popover":80,"./ProgressBar":81,"./Radio":82,"./ResponsiveEmbed":83,"./Row":84,"./SafeAnchor":85,"./SplitButton":86,"./Tab":87,"./TabContainer":88,"./TabContent":89,"./Table":90,"./TabPane":91,"./Tabs":92,"./Thumbnail":93,"./ToggleButton":94,"./ToggleButtonGroup":95,"./Tooltip":96,"./Well":97,"./utils":222}],351:[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CAKES_END_POINT = "http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/";
+
+exports.CAKES_END_POINT = CAKES_END_POINT;
+},{}],10:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43943,9 +43952,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _httpEndpoints = require('./../CONSTS/http-endpoints');
 
-var CAKES_END_POINT = 'http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/';
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 exports.default = new (function () {
     function HttpService() {
@@ -43963,14 +43972,14 @@ exports.default = new (function () {
     _createClass(HttpService, [{
         key: 'getAllCakes',
         value: function getAllCakes(callback) {
-            return fetch(CAKES_END_POINT).then(function (httpResponseCakes) {
-                if (httpResponseCakes.ok === true && httpResponseCakes.status < 300) {
-                    return httpResponseCakes;
+            return fetch(_httpEndpoints.CAKES_END_POINT).then(function (response) {
+                if (response.ok === true && response.status < 300) {
+                    return response.json();
                 } else {
-                    return 'all:error';
+                    return {
+                        serverMessage: 'Problem when loading all cakes'
+                    };
                 }
-            }).then(function (data) {
-                return data.json();
             }).then(function (cakes) {
                 return callback(cakes);
             }).catch(function (error) {
@@ -43983,11 +43992,13 @@ exports.default = new (function () {
     }, {
         key: 'getOneCakeById',
         value: function getOneCakeById(cakeId, callback) {
-            return fetch(CAKES_END_POINT + ('' + cakeId)).then(function (response) {
+            return fetch(_httpEndpoints.CAKES_END_POINT + ('' + cakeId)).then(function (response) {
                 if (response.ok === true && response.status < 300) {
                     return response.json();
                 } else {
-                    return new Error('expected 201 created ! something else has been re');
+                    return {
+                        serverMessage: 'Problem when loading one cakes by its id'
+                    };
                 }
             }).then(function (cakes) {
                 return callback(cakes);
@@ -44002,7 +44013,7 @@ exports.default = new (function () {
             var cake_config_ob = JSON.stringify(cake);
             var http_method_post = 'POST';
 
-            fetch(CAKES_END_POINT, {
+            fetch(_httpEndpoints.CAKES_END_POINT, {
                 method: http_method_post,
                 body: cake_config_ob,
                 headers: new Headers({
@@ -44012,7 +44023,7 @@ exports.default = new (function () {
                 if (response.ok === true && response.status === 201) {
                     return response.json();
                 } else {
-                    return new Error('expected 201 created ! something else has been re');
+                    serverMessage: 'Problem when creating new cake';
                 }
             }).then(function (data) {
                 return callback(data);
@@ -44024,7 +44035,7 @@ exports.default = new (function () {
 
     return HttpService;
 }())();
-},{}],3:[function(require,module,exports) {
+},{"./../CONSTS/http-endpoints":351}],3:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44073,11 +44084,14 @@ var MainView = function (_Component) {
             var _this2 = this;
 
             _httpService2.default.getAllCakes(function (cakes) {
-                _this2.setState(function (prevState) {
-                    return {
-                        cakes: cakes
-                    };
-                });
+                if (cakes.serverMessage === undefined) {
+
+                    _this2.setState(function (prevState) {
+                        return {
+                            cakes: cakes
+                        };
+                    });
+                }
             });
         }
     }, {

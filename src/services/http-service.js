@@ -1,6 +1,6 @@
 
+import { CAKES_END_POINT } from './../CONSTS/http-endpoints'
 
-const CAKES_END_POINT = `http://ec2-34-243-153-154.eu-west-1.compute.amazonaws.com:5000/api/cakes/`;
 
 export default new class HttpService {
 
@@ -14,15 +14,17 @@ export default new class HttpService {
     // get all cakes form cake server
     getAllCakes(callback) {
         return fetch(CAKES_END_POINT)
-            .then(httpResponseCakes => {
-                if (httpResponseCakes.ok === true && httpResponseCakes.status < 300) {
-                    return httpResponseCakes;
+            .then(response => {
+                if (response.ok === true && response.status < 300) {
+                    return response.json();
                 }
                 else {
-                    return 'all:error';
+                    return {
+                        serverMessage: 'Problem when loading all cakes'
+                    };
                 }
-            }).then(data => (data.json())
-            ).then(cakes => callback(cakes))
+            })
+            .then(cakes => callback(cakes))
             .catch(error => callback('error:getall'))
     }
 
@@ -34,7 +36,9 @@ export default new class HttpService {
                     return response.json();
                 }
                 else {
-                    return new Error('expected 201 created ! something else has been re')
+                    return {
+                        serverMessage: 'Problem when loading one cakes by its id'
+                    };
                 }
 
             })
@@ -59,10 +63,10 @@ export default new class HttpService {
                     return response.json();
                 }
                 else {
-                    return new Error('expected 201 created ! something else has been re')
+                    serverMessage: 'Problem when creating new cake'
                 }
             })
-          
+
             .then((data) => callback(data))
             .catch(error => callback('error:create'))
     }

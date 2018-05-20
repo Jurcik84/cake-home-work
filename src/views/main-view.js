@@ -18,9 +18,12 @@ export default class MainView extends Component {
 
     componentDidMount() {
         http.getAllCakes((cakes) => {
+          if(cakes.serverMessage === undefined){
+
             this.setState((prevState) => ({
                 cakes
             }))
+          }
         })
     }
 
@@ -31,13 +34,11 @@ export default class MainView extends Component {
         return (
             <Grid>
                 <PageHeader>
-                 
-                        <Link to="/addcake">
-                          <Button>
-                              Add New Cake
+                    <Link to="/addcake">
+                        <Button>
+                            Add New Cake
                           </Button>
-                        </Link>
-                    
+                    </Link>
                 </PageHeader>
                 <ListGroup>
                     {
